@@ -1,10 +1,11 @@
 #Dependiences 
 import pandas as pd
+import numpy as np
 import datetime as dt
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func, inspect, distinct
+from sqlalchemy import create_engine, func, inspect, distinct, and_
 from flask import Flask, jsonify
 
 ##########################################################
@@ -43,7 +44,8 @@ def home():
         f"Precipation: /api/v1.0/precipitation<br/>"
         f"Stations: /api/v1.0/stations<br/>"
         f"Temperature Observations: /api/v1.0/tobs<br/>"
-        f"For Minimum Temperature, Avg Temperature, Max Temperature for a start date: /api/v1.0/<start>  or start-end range: /api/v1.0/<start>/<end>"
+        f"For Minimum Temperature, Avg Temperature, Max Temperature <br/>"
+            "enter the dates <YYYY-MM-DD> after /api/v1.0/<start> or /api/v1.0/<start>/<end>"
         )
 
 
@@ -79,7 +81,7 @@ def stations():
     hi_weather_st = session.query(station.station, station.name).all()
 
     session.close()
-    
+
     #Creating station dictionary for api
     weather_stations = []
     for station_code, name in hi_weather_st:
@@ -90,5 +92,44 @@ def stations():
     
     return jsonify(weather_stations)
 
+@app.route("/api/v1.0/tobs")
+def tobs():
+    """Query the dates and temperature observations for most active station"""
+    #Session from Python to the DB
+    session = Session(engine)
+
+    #Query station information
+    waihee_obs = session.query(measurement.date, measurement.tobs).\
+        filter(measurement.date >'2016-08-22').\
+        filter(measurement.station == 'USC00519281').all()
+    
+    #Creating a dictionary for api temp/obs of Wahiee
+    wahiee = []
+    for date, obs in waihee_obs:
+        wahiee_dict = {}
+        wahiee_dict["date"] = date
+        wahiee_dict["obs"] = obs
+        wahiee.append(wahiee_dict)
+    return jsonify(wahiee) 
+
+@app.route("/api/v1.0/<start>")
+@app.route("/api/v1.0/<start>/<end>")
+def stats(start=None, end=None):
+    """Function/Query to obtain the temperature obs (min,avg,max) of dates inputed by user"""
+    
+    sel = [func.min(measurement.tobs), func.avg(measurement.tobs), func.max(measurement.tobs)]
+    
+    if not end:
+        results = session.query(*sel).\
+            filter(measurement.date >= start).all()
+        temps = list(np.ravel(results))
+        return jsonify(temps)
+    else:
+        results = session.query(*sel).\
+            filter(measurement.date >= start).\
+            filter(measurement.date <= end).all()
+        temps = list(np.ravel(results))
+        return jsonify(temps=temps)
+    
 if __name__ == "__main__":
     app.run(debug=True)
