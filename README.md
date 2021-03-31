@@ -1,5 +1,6 @@
 ## PROJECT: Surfs Up with SQLAlchemy! 
 --------------------------------------------
+![surfs-up.png](Images/surfs-up.png)
    Congratulations! I've decided to treat myself to a long holiday vacation in Honolulu, Hawaii! 
    To help with the trip planning, I need to do some CLIMATE ANALYSIS on the area. 
 
