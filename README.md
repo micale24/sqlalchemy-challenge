@@ -1,7 +1,7 @@
-# NAME OF PROJECT: Surfs Up with SQLAlchemy! 
+## PROJECT: Surfs Up with SQLAlchemy! 
 --------------------------------------------
-	Congratulations! I've decided to treat myself to a long holiday vacation in Honolulu, Hawaii! 
-    To help with the trip planning, I need to do some CLIMATE ANALYSIS on the area. 
+   Congratulations! I've decided to treat myself to a long holiday vacation in Honolulu, Hawaii! 
+   To help with the trip planning, I need to do some CLIMATE ANALYSIS on the area. 
 
 ## STORY OF PROJECT:
 --------------------
@@ -14,7 +14,7 @@
     * Pandas - Clean and orgnaize data
     * Flask - To run the python appliaiton 
     * JSON - The format of the retrieved data
-    * Matplotlib - Python libary used to graph data fro stastical analysis 
+    * Matplotlib - Python libary used to graph data for stastical analysis 
 
 
 ## LINK TO LIVE SITE:
@@ -22,5 +22,5 @@
 
 ## ETL PROCESS:
 --------------------------
-    Explain your process
+    Explain your process...
 
