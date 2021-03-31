@@ -6,7 +6,8 @@
 
 ## STORY OF PROJECT:
 --------------------
-    The object of this project is to conduct a climate analysis and data exloration of Hawaii's  JSON weather data retrieved from base weather stations 
+    The object of this project is to conduct a climate analysis and data exloration of Hawaii's 
+      JSON weather data retrieved from base weather stations 
 
 ## SKILLS USED/LANGUAGES:
 -------------------------
